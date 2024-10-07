@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject text;
     private GameObject restartButton;
+    private GameObject[] blocks;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +18,21 @@ public class GameManager : MonoBehaviour
 
         // ボタンを非表示
         restartButton.SetActive(false);
+
+        // ブロックを全て取得
+        blocks = GameObject.FindGameObjectsWithTag("Block");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // ブロックをすべて取得
+        blocks = GameObject.FindGameObjectsWithTag("Block");
+        // ブロックがなくなったらゲームクリア
+        if (blocks.Length == 0)
+        {
+            GameClear();
+        }
     }
 
     // ゲームオーバー処理
@@ -39,6 +49,12 @@ public class GameManager : MonoBehaviour
     {
         // 現在のシーンを再読み込み
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // ゲームクリア処理
+    public void GameClear()
+    {
+        text.GetComponent<Text>().text = "Game Clear";
     }
 
 }
